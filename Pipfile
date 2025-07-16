@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+sqlalchemy = "*"
+sqlalchemy-utils = "*"
+eralchemy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+diagram = "python -c \"from sqlalchemy_utils import create_database, database_exists; from eralchemy import render_er; render_er('sqlite:///tmp.db', 'diagram.png')\""
