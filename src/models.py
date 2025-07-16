@@ -113,3 +113,6 @@ class Favoritos_Personajes(db.Model):
             "usuario": self.usuario.serialize() if self.usuario else None,
             "personaje": self.personaje.serialize() if self.personaje else None
         }
+
+# Alias for backward compatibility with existing admin.py
+User = Usuario
