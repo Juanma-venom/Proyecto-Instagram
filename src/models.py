@@ -23,8 +23,9 @@ class Usuario(db.Model):
     username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
 
-    favoritos_planetas = db.relationship("FavoritosPlanetas", back_populates="usuario", cascade="all, delete-orphan")
-    favoritos_personajes = db.relationship("FavoritosPersonajes", back_populates="usuario", cascade="all, delete-orphan")
+    # Relaciones corregidas
+    favoritos_planetas = relationship("FavoritosPlanetas", back_populates="usuario", cascade="all, delete-orphan")
+    favoritos_personajes = relationship("FavoritosPersonajes", back_populates="usuario", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
@@ -46,6 +47,7 @@ class Planetas(db.Model):
     terreno: Mapped[str] = mapped_column(nullable=True)
     superficie_agua: Mapped[str] = mapped_column(nullable=True)
 
+    # Relación corregida
     favoritos = relationship("FavoritosPlanetas", back_populates="planeta", cascade="all, delete-orphan")
 
     def serialize(self):
@@ -74,6 +76,7 @@ class Personajes(db.Model):
     año_nacimiento: Mapped[str] = mapped_column(nullable=False)
     genero: Mapped[str] = mapped_column(nullable=False)
 
+    # Relación corregida
     favoritos = relationship("FavoritosPersonajes", back_populates="personaje", cascade="all, delete-orphan")
 
     def serialize(self):
@@ -92,9 +95,10 @@ class Personajes(db.Model):
 class FavoritosPlanetas(db.Model):
     __tablename__ = 'favoritos_planetas'
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_usuario: Mapped[int] = mapped_column(ForeignKey('usuario.id'), nullable=False)
-    id_planeta: Mapped[int] = mapped_column(ForeignKey('planetas.id'), nullable=False)
+    id_usuario: Mapped[int] = mapped_column(Integer, ForeignKey('usuario.id'), nullable=False)
+    id_planeta: Mapped[int] = mapped_column(Integer, ForeignKey('planetas.id'), nullable=False)
 
+    # Relaciones corregidas
     usuario = relationship("Usuario", back_populates="favoritos_planetas")
     planeta = relationship("Planetas", back_populates="favoritos")
 
@@ -109,9 +113,10 @@ class FavoritosPlanetas(db.Model):
 class FavoritosPersonajes(db.Model):
     __tablename__ = 'favoritos_personajes'
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_usuario: Mapped[int] = mapped_column(ForeignKey('usuario.id'), nullable=False)
-    id_personaje: Mapped[int] = mapped_column(ForeignKey('personajes.id'), nullable=False)
+    id_usuario: Mapped[int] = mapped_column(Integer, ForeignKey('usuario.id'), nullable=False)
+    id_personaje: Mapped[int] = mapped_column(Integer, ForeignKey('personajes.id'), nullable=False)
 
+    # Relaciones corregidas
     usuario = relationship("Usuario", back_populates="favoritos_personajes")
     personaje = relationship("Personajes", back_populates="favoritos")
 

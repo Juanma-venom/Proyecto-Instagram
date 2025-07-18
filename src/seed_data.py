@@ -3,18 +3,17 @@ Script para poblar la base de datos con datos de ejemplo de StarWars
 """
 from app import app, db
 from models import Usuario, Planetas, Personajes
+import os
 
 def seed_data():
     """Función para poblar la base de datos con datos de ejemplo"""
     
     with app.app_context():
-        # Crear las tablas
+        # Eliminar todas las tablas y recrearlas
+        db.drop_all()
         db.create_all()
         
-        # Verificar si ya hay datos
-        if Usuario.query.first() is not None:
-            print("La base de datos ya contiene datos. Saltando el seeding...")
-            return
+        print("Base de datos recreada exitosamente")
         
         # Crear usuarios de ejemplo
         usuarios = [
